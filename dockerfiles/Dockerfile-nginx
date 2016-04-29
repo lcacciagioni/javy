@@ -3,5 +3,5 @@ FROM nginx:stable-alpine
 ADD https://s3.amazonaws.com/infra-assessment/static.zip /usr/share/src/static/static.zip
 
 RUN apk add --update unzip && rm -rf /var/cache/apk/* && \
-  cd /usr/share/src/static/ &&
+  cd /usr/share/src/static/ && \
   unzip static.zip
