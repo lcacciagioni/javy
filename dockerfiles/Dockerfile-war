@@ -1,0 +1,3 @@
+FROM jetty:latest
+
+ADD https://s3.amazonaws.com/infra-assessment/companyNews.war /var/lib/jetty/webapps/news.war

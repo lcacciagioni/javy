@@ -1,0 +1,4 @@
+---
+- name: remove docker devicemapper
+  shell: service docker stop && rm -rf /var/lib/docker/* && systemctl daemon-reload && service docker start
+  become: yes

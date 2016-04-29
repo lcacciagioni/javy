@@ -1,0 +1,26 @@
+---
+- name: Install management of selinux
+  dnf: name=libselinux-python state=latest
+
+- name: Disable extreme security
+  selinux: state=disabled
+
+- name: Copy docker repo
+  copy: src=fedora/docker.repo dest=/etc/yum.repos.d/docker.repo mode=0644 owner=root group=root
+
+- name: Install base packages
+  dnf: name="{{ item }}" state=latest
+  with_items:
+    - ntp
+    - bmon
+    - htop
+    - docker-engine
+    - python-docker-py
+
+- name: Configure Docker
+  copy: src=fedora/docker.service dest=/etc/systemd/system/docker.service mode=0644 owner=root group=root
+  notify:
+    - remove docker devicemapper
+
+- name: Enable and start docker
+  service: name=docker state=started enabled=yes

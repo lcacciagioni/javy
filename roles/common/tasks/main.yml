@@ -1,0 +1,12 @@
+---
+- include: centos.yml
+  when: ansible_distribution == 'CentOS'
+
+- include: fedora.yml
+  when: ansible_distribution == 'Fedora'
+
+- include: ubuntu.yml
+  when: ansible_distribution == 'Ubuntu'
+
+- include: debian.yml
+  when: ansible_distribution == 'Debian'
