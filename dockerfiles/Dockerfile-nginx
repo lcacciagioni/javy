@@ -1,4 +1,4 @@
-FROM nginx:stable
+FROM nginx:stable-alpine
 
 ADD https://s3.amazonaws.com/infra-assessment/static.zip /usr/share/src/static/static.zip
 
