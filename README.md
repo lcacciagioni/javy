@@ -57,8 +57,10 @@ Here I'll list some of the improvements that come quickly to my mind right now.
   * [Amazon ECS](http://docs.aws.amazon.com/AmazonECS/latest/developerguide/Welcome.html)
 * Replace haproxy with [Amazon ELB](https://aws.amazon.com/es/elasticloadbalancing/) + [Autoscaling Group](https://aws.amazon.com/autoscaling/)
 * Any CDN for static assests
-* Replace static assets hosting in nginx with an Amazon S3 Based alternative
+* Replace static assets hosting in nginx with an Amazon S3 Based alternative for production at least.
 * Better versioning for the app. This simplifies rollback in case of needed.
+* Make the Docker images configurable by env vars.
+* SECURITY a lot more security on all the layers ranging from network up to daemons configurations.
 ### Modifying the app
 * make the app more cloud friendly following the [12factor.net](http://12factor.net/) recommendations.
 * Use highly scallable persistence layer like any JDBC compatible database or any NoSQL databases like [Cassandra](http://cassandra.apache.org/), [Hazelcast](https://hazelcast.com/use-cases/application-scaling/), or even [Redis](http://redis.io/). This is more a dev decision than mine.
