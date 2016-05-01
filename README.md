@@ -58,6 +58,7 @@ Here I'll list some of the improvements that come quickly to my mind right now.
 * Replace haproxy with [Amazon ELB](https://aws.amazon.com/es/elasticloadbalancing/) + [Autoscaling Group](https://aws.amazon.com/autoscaling/)
 * Any CDN for static assests
 * Replace static assets hosting in nginx with an Amazon S3 Based alternative
+* Better versioning for the app. This simplifies rollback in case of needed.
 ### Modifying the app
 * make the app more cloud friendly following the [12factor.net](http://12factor.net/) recommendations.
 * Use highly scallable persistence layer like any JDBC compatible database or any NoSQL databases like [Cassandra](http://cassandra.apache.org/), [Hazelcast](https://hazelcast.com/use-cases/application-scaling/), or even [Redis](http://redis.io/). This is more a dev decision than mine.
