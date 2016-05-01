@@ -1,3 +1,5 @@
 FROM jetty:latest
 
 ADD https://s3.amazonaws.com/infra-assessment/companyNews.war /var/lib/jetty/webapps/news.war
+
+RUN chown -R jetty:jetty /var/lib/jetty/webapps/ && chmod 0644 /var/lib/jetty/webapps/news.war
