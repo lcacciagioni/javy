@@ -24,7 +24,7 @@ cd /path/to/this/repo
 VAGRANT_VAGRANTFILE=Vagrantfile-multivm vagrant up --provision
 ```
 
-After turnning on the vms you will be able to see the page at [http://192.168.33.10](http://192.168.33.10).
+After turning on the vms you will be able to see the page at [http://192.168.33.10](http://192.168.33.10).
 
 > TIP: in a multivm deployment you can see the [haproxy](http://www.haproxy.org/) status page at [http://192.168.33.10/haproxy](http://192.168.33.10/haproxy).
 
