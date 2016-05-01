@@ -1,6 +1,6 @@
 FROM jetty:latest
 
-VOLUME /Users/dcameron/persistence/
+VOLUME /Users/dcameron/persistence/files*
 
 ADD https://s3.amazonaws.com/infra-assessment/companyNews.war /var/lib/jetty/webapps/news.war
 
