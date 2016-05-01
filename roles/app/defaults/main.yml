@@ -1,2 +1,6 @@
 ---
-# defaults file for app
+app_files_path: /opt/files
+app_war_image: cacciald/javy:war
+app_static_image: cacciald/javy:static
+app_java_opts: -Xmx512m
+gluster: false

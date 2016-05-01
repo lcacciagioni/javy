@@ -1,2 +1,16 @@
 ---
-# tasks file for app
+- name: Mount gluster
+  mount:
+    name: "{{ app_files_path }}"
+    src: "192.168.33.10:/srv/export"
+    fstype: nfs
+    state: mounted
+    opts: "soft,timeo=900,retrans=3,vers=3,proto=tcp"
+  when: multivm is defined
+
+# This is very insecure
+- name: Create the storage folder
+  file: path="{{ app_files_path }}" mode=0777 state=directory recurse=yes
+
+- include: war.yml
+- include: static.yml

@@ -1,0 +1,8 @@
+---
+- name: Install the jetty service
+  template: src=jetty.service.j2 dest=/etc/systemd/system/jetty-app.service mode=0644 owner=root group=root
+  notify:
+    - reload systemd
+
+- name: Enable jetty-app service
+  service: name=jetty-app state=started enabled=yes

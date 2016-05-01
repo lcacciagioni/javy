@@ -16,6 +16,7 @@
     - htop
     - docker-engine
     - python-docker-py
+    - nfs-utils
 
 - name: Configure Docker
   copy: src=fedora/docker.service dest=/etc/systemd/system/docker.service mode=0644 owner=root group=root

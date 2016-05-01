@@ -1,0 +1,77 @@
+
+$script = <<SCRIPT
+setenforce 0
+export DEBIAN_FRONTEND=noninteractive
+ansible --version || dnf -y install ansible python-dnf
+cd /vagrant
+export PYTHONUNBUFFERED=1
+ansible-playbook -i local_inventory -b -c local provision.yml --extra-vars "multivm=yes"
+SCRIPT
+
+$script2 = <<SCRIPT
+haproxy -v || dnf -y install haproxy nfs-utils
+cat <<EOF > /etc/haproxy/haproxy.cfg
+global
+    daemon
+    log         127.0.0.1 local2
+    chroot      /var/lib/haproxy
+    pidfile     /var/run/haproxy.pid
+    maxconn     4000
+    user        haproxy
+    group       haproxy
+    spread-checks 5
+
+defaults
+    mode http
+    timeout connect 5000ms
+    timeout client 50000ms
+    timeout server 50000ms
+    balance roundrobin
+    option httplog
+    retries 3
+    option redispatch
+    stats enable
+    stats uri     /haproxy
+    stats refresh 5s
+
+frontend http-in
+  bind *:80
+  default_backend javaapp
+
+backend javaapp
+  option httpchk GET /
+  cookie SERVERID insert indirect nocache
+  server s1 192.168.33.11:80 check cookie s1
+  server s2 192.168.33.12:80 check cookie s2
+EOF
+mkdir -p /srv/export || :
+chmod -R 777 /srv/export
+cat <<EOF > /etc/exports
+/srv/export 192.168.33.0/24(rw,no_root_squash,async,no_subtree_check,anonuid=65534,anongid=65534,insecure)
+EOF
+systemctl enable rpcbind nfs-server
+systemctl restart rpcbind nfs-server
+systemctl enable haproxy
+systemctl restart haproxy
+exportfs -a
+SCRIPT
+
+Vagrant.configure(2) do |config|
+  config.vm.box = "fedora/23-cloud-base"
+
+  config.vm.provider "virtualbox" do |vb|
+    vb.memory = "750"
+  end
+
+  config.vm.define "lb", primary: true do |lb|
+    lb.vm.network "private_network", ip: "192.168.33.10"
+    lb.vm.provision "shell", inline: $script2
+  end
+
+  for i in 1..2
+    config.vm.define "web#{i}" do |web|
+      web.vm.network "private_network", ip: "192.168.33.1#{i}"
+      web.vm.provision "shell", inline: $script
+    end
+  end
+end

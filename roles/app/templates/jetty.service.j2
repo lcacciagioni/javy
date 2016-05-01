@@ -1,0 +1,15 @@
+[Unit]
+Description=Jetty Enabled App
+Requires=docker.service
+After=docker.service
+
+[Service]
+Restart=always
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker pull {{ app_war_image }}
+ExecStartPre=-/usr/bin/docker rm -f jettyapp
+ExecStart=/usr/bin/docker run --log-driver=journald --net=host --name=jettyapp -v {{ app_files_path }}:/Users/dcameron/persistence/files* {{ app_war_image }} {{ app_java_opts }}
+ExecStop=/usr/bin/docker rm -f jettyapp
+
+[Install]
+WantedBy=multi-user.target

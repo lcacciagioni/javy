@@ -1,0 +1,15 @@
+[Unit]
+Description=Nginx Jetty Enabled App
+Requires=docker.service
+After=docker.service
+
+[Service]
+Restart=always
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker pull {{ app_static_image }}
+ExecStartPre=-/usr/bin/docker rm -f nginxapp
+ExecStart=/usr/bin/docker run --log-driver=journald --net=host --name=nginxapp {{ app_static_image }}
+ExecStop=/usr/bin/docker rm -f nginxapp
+
+[Install]
+WantedBy=multi-user.target

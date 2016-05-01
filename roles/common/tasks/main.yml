@@ -1,12 +1,19 @@
 ---
-- include: centos.yml
-  when: ansible_distribution == 'CentOS'
-
 - include: fedora.yml
   when: ansible_distribution == 'Fedora'
 
-- include: ubuntu.yml
-  when: ansible_distribution == 'Ubuntu'
+- name: Enable docker-gc for cleanup
+  cron:
+    name: "docker-gc cleanup"
+    state: present
+    user: root
+    hour: "*/1"
+    job: "docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v /etc:/etc spotify/docker-gc || :"
 
-- include: debian.yml
-  when: ansible_distribution == 'Debian'
+- name: Enable cleanup of unused volumes
+  cron:
+    name: "clean docker volumes"
+    state: present
+    user: root
+    hour: "*/1"
+    job: "docker volume rm $(docker volume ls -qf dangling=true) || :"

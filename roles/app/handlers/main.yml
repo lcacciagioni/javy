@@ -1,2 +1,13 @@
 ---
-# handlers file for app
+- name: reload systemd
+  command: systemctl daemon-reload
+  become: yes
+  notify:
+    - restart jetty app
+    - restart nginx app
+
+- name: restart jetty app
+  service: name=jetty-app state=restarted
+
+- name: restart nginx app
+  service: name=nginx-app state=restarted
