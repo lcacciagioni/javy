@@ -43,7 +43,9 @@ VAGRANT_VAGRANTFILE=Vagrantfile-multivm vagrant destroy -f
 
 ## Future improvements
 Here I'll list some of the improvements that come quickly to my mind right now.
+
 ### Without Modifying the application
+
 * Replace NFS by a more cloud friendly distributed filesystem like:
   * [GlusterFS](http://www.gluster.org/)
   * [CephFS](http://ceph.com/)
@@ -61,7 +63,9 @@ Here I'll list some of the improvements that come quickly to my mind right now.
 * Better versioning for the app. This simplifies rollback in case of needed.
 * Make the Docker images configurable by env vars.
 * SECURITY a lot more security on all the layers ranging from network up to daemons configurations.
+
 ### Modifying the app
+
 * make the app more cloud friendly following the [12factor.net](http://12factor.net/) recommendations.
 * Use highly scallable persistence layer like any JDBC compatible database or any NoSQL databases like [Cassandra](http://cassandra.apache.org/), [Hazelcast](https://hazelcast.com/use-cases/application-scaling/), or even [Redis](http://redis.io/). This is more a dev decision than mine.
 * Use [Amazon Lambda](https://aws.amazon.com/lambda/details/) in combination with the previuos modifications to create a NoServer deployment restful app.
