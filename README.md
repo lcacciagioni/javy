@@ -62,6 +62,7 @@ Here I'll list some of the improvements that come quickly to my mind right now.
 * Replace static assets hosting in nginx with an Amazon S3 Based alternative for production at least.
 * Better versioning for the app. This simplifies rollback in case of needed.
 * Make the Docker images configurable by env vars.
+* Local docker registry for more speed on deployments.
 * SECURITY a lot more security on all the layers ranging from network up to daemons configurations.
 
 ### Modifying the app
